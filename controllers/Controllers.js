@@ -16,7 +16,14 @@ export const getPicsByKeyword = async (req, res) => {
     const body = await response.json();
     const photos = body.photos.photo;
 
-    res.status(200).json(photos);
+    const returnJson = photos.map((elem) => ({
+      id: elem.id,
+      title: elem.title,
+      url: `https://live.staticflickr.com/${elem.server}/${elem.id}_${elem.secret}_b.jpg`,
+      thumbUrl: `https://live.staticflickr.com/${elem.server}/${elem.id}_${elem.secret}_t.jpg`,
+    }));
+
+    res.status(200).json(returnJson);
   } catch (error) {
     console.log(error.message);
   }
